@@ -37,6 +37,13 @@ body {
 .cell:nth-child(3) {
   border-top: none;
 }
+.cell.x,
+.cell.circle {
+  cursor: not-allowed;
+}
+
+.board.x .cell {
+}
 
 .cell:nth-child(3n + 1) {
   border-left: none;
@@ -53,7 +60,9 @@ body {
 }
 
 .cell.x::before,
-.cell.x::after {
+.cell.x::after,
+.board.x .cell::before,
+.board.x .cell::after {
   content: '';
   position: absolute;
   width: calc(var(--mark-size) * 0.15);
@@ -61,7 +70,9 @@ body {
   background-color: black;
 }
 
-.cell.x::before {
+.cell.x::before,
+.board.x .cell::before,
+.board.x .cell::after {
   transform: rotate(45deg);
 }
 
@@ -83,7 +94,7 @@ body {
 }
 
 .cell.circle::after {
-  width: calc(var(--mark-size) * .7);
-  height: calc(var(--mark-size) * .7);
+  width: calc(var(--mark-size) * 0.7);
+  height: calc(var(--mark-size) * 0.7);
   background-color: white;
 }
