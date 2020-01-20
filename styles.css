@@ -62,3 +62,7 @@ body {
 .cell.x::before {
     transform: rotate(45deg);
 }
+
+.cell.x::after {
+  transform: rotate(-45deg);
+}
