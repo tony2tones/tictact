@@ -1,5 +1,3 @@
-import { ENGINE_METHOD_PKEY_ASN1_METHS } from "constants";
-
 const X_CLASS = 'x';
 const CIRCLE_CLASS = 'circle';
 const WINNING_COMBOS = [
@@ -15,6 +13,8 @@ const WINNING_COMBOS = [
 
 const cellElements = document.querySelectorAll('[data-cell]');
 const board = document.getElementById('board');
+const winnerMessageElement = document.getElementById('winning-message');
+const winnerMessageTextElement = document.querySelector('[data-winning-text]');
 let circleTurn;
 
 startGame();
@@ -34,17 +34,27 @@ function handleClick(e) {
   if (checkWin(currentClass)) {
     console.log('winner');
     endGame(false);
-}
-  swapTurns();
-  setBoardHoverClass();
+  } else if (isDraw()) {
+    endGame(true);
+  } else {
+    swapTurns();
+    setBoardHoverClass();
+  }
 }
 
 function endGame(draw) {
-    if(draw) {
+  if (draw) {
+    winnerMessageTextElement.innerText = 'Draw!';
+  } else {
+    winnerMessageTextElement.innerText = `${circleTurn ? "O's" : "X's"} wins`;
+  }
+  winnerMessageElement.classList.add('show');
+}
 
-    } else {
-        winnerTextMessage
-    } 
+function isDraw() {
+  return [...cellElements].every(cell => {
+    return cell.classList.contains(X_CLASS)
+  })
 }
 
 function placeMark(cell, currentClass) {
@@ -57,9 +67,9 @@ function swapTurns() {
 
 function checkWin(currentClass) {
   return WINNING_COMBOS.some(combination => {
-      return combination.every(index => {
-          return cellElements[index].classList.contains(currentClass);
-      })
+    return combination.every(index => {
+      return cellElements[index].classList.contains(currentClass);
+    });
   });
 }
 
